@@ -4,6 +4,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Sky } from "./vendor/Sky.js?v=0.160.0";
+import { GLTFLoader } from "./vendor/GLTFLoader.js?v=0.160.0";
 import { ThreeBackend } from "./world-backend.js?v=0.2.0";
 
 const $ = id => document.getElementById(id);
@@ -251,6 +252,13 @@ farm();
 for (const [k, list] of Object.entries(buckets)) { const mesh = new THREE.Mesh(merge(list), M[k]); mesh.castShadow = !["lawn", "gravel", "glass"].includes(k); mesh.receiveShadow = true; farmGroup.add(mesh); }
 picks.forEach(p => farmGroup.add(p));
 { const sk = new THREE.Mesh(merge(skirts.map(g => g.index ? g.toNonIndexed() : g)), new THREE.MeshBasicMaterial({ map: aoTex, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 })); sk.renderOrder = 1; farmGroup.add(sk); }
+// v0.3.0 (8 Nov 2026, cedwyn#528): Tŷ Mawr (Great House) from the latest model (section/revival-ar models/tymawr.glb v0.2.3,
+// cut to the house group: no church, lane, hedges, meadow or garden), alone on the steppe. The drawn farm above stays as the fallback.
+{ const drawn = farmGroup.children.filter(o => o.isMesh && !picks.includes(o));
+  new GLTFLoader().load(new URL('models/tymawr.glb?v=0.2.3', import.meta.url).href, gl => {
+    gl.scene.traverse(o => { if (o.isMesh) { o.castShadow = !LOW; o.receiveShadow = true; } });
+    drawn.forEach(o => { o.visible = false; }); farmGroup.add(gl.scene); window.__a3dmodel = 'glb';
+  }, undefined, () => { window.__a3dmodel = 'drawn'; }); }
 
 // ---------- the steppe: flat ground, tussock grass (coirón) and a few low shrubs ----------
 {
