@@ -1,0 +1,62 @@
+{
+ "version": "0.5.0",
+ "origin": {
+  "lat": -42.82534225706972,
+  "lon": -64.94634193560334,
+  "note": "replica house site, from the Chubut H3 2D map (outline.json v0.1.0): Tŷ Mawr offset from the Wales estate centroid (+271.8 m E, -213.0 m N, azimuthal equidistant) applied to the Chubut centroid"
+ },
+ "frame": "x = metres east of the origin, z = metres south (three.js), equirectangular at the origin latitude",
+ "k_m_per_deg": {
+  "east": 81771.6126174827,
+  "north": 111089.33729792581
+ },
+ "h0": 95.13463340176635,
+ "near": {
+  "file": "heights.png",
+  "size": 640,
+  "x0": -13500,
+  "x1": 6500,
+  "n0": -6500,
+  "n1": 13500,
+  "decode": "(R*256+G)/10-20 metres above sea level; B=255 sea",
+  "cell_m": 31.25
+ },
+ "cover": {
+  "file": "cover.jpg",
+  "size": 2048,
+  "same_extent_as": "near"
+ },
+ "far": {
+  "file": "far.png",
+  "size": 200,
+  "half_extent_m": 80000,
+  "decode": "(R*256+G)/10-20; B=255 sea; lowered 4 m inside the near box"
+ },
+ "buildings": {
+  "file": "buildings.bin",
+  "count": 29416,
+  "layout": "BLD1, uint32 count, then per building int16 x*2, int16 z*2, uint16 w*10, uint16 l*10, uint8 angle (0-255 = 0-180 deg, about +y), uint8 height*4"
+ },
+ "coast": {
+  "nearest_m": 2670,
+  "point": [
+   -42.805522,
+   -64.927865
+  ],
+  "bearing_deg": 34
+ },
+ "wales_compare": {
+  "house": [
+   51.452684,
+   -3.198518
+  ],
+  "nearest_coast_m": 2344,
+  "estate_centroid_to_coast_m": 2654,
+  "chubut_estate_centroid_to_coast_m": 2654
+ },
+ "sources": [
+  "Terrain: Terrain Tiles (Mapzen/Linux Foundation, on AWS Open Data; SRTM and other public sources), read 11 Nov 2026",
+  "Buildings: Microsoft Global ML Building Footprints (ODbL, release 2026-02-03), plus OpenStreetMap buildings not in that set",
+  "Coastline and roads: © OpenStreetMap contributors (ODbL), read 11 Nov 2026"
+ ]
+}
