@@ -367,7 +367,7 @@ function windMat(base) { base.onBeforeCompile = sh => { sh.uniforms.uT = windU; 
 // ---------- views ----------
 const VIEWS = { heli: [[52, 44, 74], [-10, 1, 6]], ground: [[-9, 1.7, 80], [-27, 4, 16]], front: [[3, 2.2, 32], [-1, 3.6, 0]], above: [[8, 150, 60], [-8, 0, 4]],
   // v0.5.0: over the house towards the sea (2.67 km to the north-north-east) and towards the houses of Puerto Madryn (north-west), and the whole area
-  sea: [[-26, 15, 64], [341, -14, -535]], town: [[-34, 9, -24], [-554, -12, -324]], area: [[2600, 2100, 4200], [-2400, -60, -3000]] }; VIEWS.quarter = VIEWS.heli; VIEWS.yard = VIEWS.ground;
+  sea: [[-26, 15, 64], [341, -14, -535]], town: [[260, 180, 300], [-5600, -60, -4400]], area: [[2600, 2100, 4200], [-2400, -60, -3000]] }; VIEWS.quarter = VIEWS.heli; VIEWS.yard = VIEWS.ground;
 function go(v) { const [p, t] = VIEWS[v]; camera.position.set(...p); controls.target.set(...t); controls.update(); }
 go(Q.get("view") || "heli");
 
