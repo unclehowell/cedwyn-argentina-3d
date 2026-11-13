@@ -1,6 +1,6 @@
 # Argentina Tŷ Mawr 3D world
 
-The Argentina Tŷ Mawr 3D world webapp of [cedwyn.bucklerfamily.estate](https://cedwyn.bucklerfamily.estate/argentina/), in its own repository.
+The Argentina Tŷ Mawr 3D world webapp, served at [bucklerfamily.estate/argentina-3d/](https://bucklerfamily.estate/argentina-3d/) (direct route; the legacy /argentina/ path is retained).
 
 It was split out of `unclehowell/cedwyn` (branch `section/argentina-3d`) on 5 Nov 2026, because that repository holds about 290 branches
 (~43 GB with history) and a job on one webapp should never need the rest. This repository is a few MB
@@ -14,14 +14,14 @@ git clone --depth 1 https://github.com/unclehowell/cedwyn-argentina-3d.git
 
 ## Where to send changes
 
-The current `split-repos.json` entry in `unclehowell/cedwyn` sets this app to `mode: split-repo`. **This repository's `main` branch is the source of truth.**
+The current estate split inventory lists this app as `mode: split-repo` and `deploy: repo`. **This repository's `main` branch is the app source of truth.**
 
-1. Make application changes on a feature branch in this repository.
-2. Open a pull request into this repository's `main`.
-3. After merge, Cedwyn's scheduled `sync-split-repos` workflow copies `main` into the retained legacy branch `section/argentina-3d`.
-4. The central `build-cedwyn` workflow assembles the unified site from the synced branch.
+1. Make app changes on a feature branch in this repository.
+2. Open the pull request into this repository's `main`.
+3. The estate build reads this repository directly for `deploy: repo` apps (see `tools/assemble.py` in `unclehowell/cedwyn`). It records the source commit and fails the build if the repository cannot be read; it does not fall back to a legacy branch.
+4. Do not submit app changes to the retained `section/argentina-3d` branch in `unclehowell/cedwyn`. The central `sync-split-repos` workflow deliberately skips entries with `deploy: repo`; that branch is not this app's development or deployment source.
 
-Do not open application pull requests against the legacy branch `section/argentina-3d`; it is a compatibility mirror, not the development target. Site-wide registry, shared runtime, central catalogue and build changes still belong in `unclehowell/cedwyn` `main`.
+The local `mirror.yml` is mode-gated. While this app remains `split-repo`, it must not copy the old branch over this repository's `main`.
 
 Full instructions: [REPO-SPLIT.md](https://github.com/unclehowell/cedwyn/blob/main/docs/REPO-SPLIT.md).
 
